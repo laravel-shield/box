@@ -1,21 +1,21 @@
 <?php
 
-namespace Shield\Skeleton\Test\Unit;
+namespace Shield\Box\Test\Unit;
 
 use PHPUnit\Framework\Assert;
 use Shield\Shield\Contracts\Service;
 use Shield\Testing\TestCase;
-use Shield\Skeleton\Skeleton;
+use Shield\Box\Box;
 
 /**
  * Class ServiceTest
  *
- * @package \Shield\Skeleton\Test\Unit
+ * @package \Shield\Box\Test\Unit
  */
 class ServiceTest extends TestCase
 {
     /**
-     * @var \Shield\Skeleton\Skeleton
+     * @var \Shield\Box\Box
      */
     protected $service;
 
@@ -23,13 +23,13 @@ class ServiceTest extends TestCase
     {
         parent::setUp();
 
-        $this->service = new Skeleton;
+        $this->service = new Box;
     }
 
     /** @test */
     public function it_is_a_service()
     {
-        Assert::assertInstanceOf(Service::class, new Skeleton);
+        Assert::assertInstanceOf(Service::class, new Box);
     }
 
     /** @test */
@@ -47,6 +47,6 @@ class ServiceTest extends TestCase
     /** @test */
     public function it_has_correct_headers_required()
     {
-        Assert::assertArraySubset([], $this->service->headers());
+        Assert::assertArraySubset(['BOX-DELIVERY-TIMESTAMP', 'BOX-SIGNATURE-PRIMARY', 'BOX-SIGNATURE-SECONDARY'], $this->service->headers());
     }
 }

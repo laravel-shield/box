@@ -1,6 +1,6 @@
 {
-    "name": "laravel-shield/skeleton",
-    "description": "A skeleton project.",
+    "name": "laravel-shield/box",
+    "description": "A box.com driver for laravel shield.",
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -17,12 +17,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Shield\\Skeleton\\": "src/"
+            "Shield\\Box\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Shield\\Skeleton\\Test\\": "tests/"
+            "Shield\\Box\\Test\\": "tests/"
         }
     }
 }
