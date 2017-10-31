@@ -5,7 +5,6 @@ namespace Shield\Box;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Log;
 use Shield\Shield\Contracts\Service;
 
 /**
