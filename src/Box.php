@@ -16,14 +16,16 @@ class Box implements Service
 {
     public function verify(Request $request, Collection $config): bool
     {
-        $timestamp = Carbon::parse($request->header('BOX-DELIVERY-TIMESTAMP'));
+        $rawTimestamp = (string) $request->header('BOX-DELIVERY-TIMESTAMP');
+
+        $timestamp = Carbon::parse($rawTimestamp);
 
         // 10 Minute Tolerance
         if (Carbon::now(config('app.timezone', 'UTC'))->diffInSeconds($timestamp) > $config->get('tolerance', 600)) {
             return false;
         }
 
-        $generated = $request->getContent() . $request->header('BOX-DELIVERY-TIMESTAMP');
+        $generated = $request->getContent() . $rawTimestamp;
 
         // Primary or Secondary can pass to be valid.
         $encoded = base64_encode(hash_hmac('sha256', $generated, $config->get('primary'), true));
