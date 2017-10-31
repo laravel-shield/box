@@ -28,17 +28,14 @@ class Box implements Service
         $generated = $request->getContent() . $rawTimestamp;
 
         // Primary or Secondary can pass to be valid.
-        $encoded = base64_encode(hash_hmac('sha256', $generated, $config->get('primary'), true));
-        if (hash_equals($encoded, $request->header('BOX-SIGNATURE-PRIMARY'))) {
-            return true;
-        }
+        return $this->check($generated, $config->get('primary'), $request->header('BOX-SIGNATURE-PRIMARY')) || $this->check($generated, $config->get('secondary'), $request->header('BOX-SIGNATURE-SECONDARY'));
+    }
 
-        $encoded = base64_encode(hash_hmac('sha256', $generated, $config->get('secondary'), true));
-        if (hash_equals($encoded, $request->header('BOX-SIGNATURE-SECONDARY'))) {
-            return true;
-        }
+    public function check($generated, $key, $supplied)
+    {
+        $encoded = base64_encode(hash_hmac('sha256', $generated, $key, true));
 
-        return false;
+        return hash_equals($encoded, $supplied);
     }
 
     public function headers(): array
